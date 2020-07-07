@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <base-input v-model="username" class="username-input" placeholder="Enter your username"></base-input>
+    </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    // $attr 是指不被props识别的（父组件传了  但是子组件没有props 接收的属性） 除了class 和 style之外
+    // 默认会将这些属性放在子组件的根节点上
+    //在子组件上设置  inhertAttrs：false  就会禁用特性继承
+    // 在子组件的节点上添加 v-bind ="$attrs" 就会把非特性属性放在该节点上
+    Vue.component('base-input', {
+        inheritAttrs: false,
+        props: ['label', 'value'],
+        template: `<div>
+        <label>
+        {{ label }}
+        <input
+        v-bind = "$attrs"
+            v-bind:value="value"
+            v-on:input="$emit('input', $event.target.value)"
+        >
+    </label>
+    </div>
+  `,
+  mounted(){
+      console.log(this.$attrs)
+  }
+    })
+    var vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                username: 'maggie'
+            }
+        },
+        methods: {
+
+        }
+    })
+</script>

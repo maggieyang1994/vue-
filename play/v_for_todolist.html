@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="el">
+        <label for="">
+            add a todo
+            <input type="text" v-model="todo" />
+            <button @click="addTodo">add</button>
+        </label>
+        <ul>
+            <todoItem v-for="(item,index) in todoList" v-bind:key="index" v-bind:title="item.title"></todoItem>
+        </ul>
+    </div>
+
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    Vue.component('todo-item', {
+  template: '\
+    <li>\
+      {{ title }}\
+    </li>\
+  ',
+  props: ['title']
+})
+    props: ['title']
+    var app = new Vue({
+        el: "#el",
+        data() {
+            return {
+                todo: "",
+                todoList: [
+                    {
+                        id: 1,
+                        title: 'Do the dishes',
+                    },
+                    {
+                        id: 2,
+                        title: 'Take out the trash',
+                    },
+                    {
+                        id: 3,
+                        title: 'Mow the lawn'
+                    }
+                ],
+            }
+        },
+        methods: {
+            addTodo() {
+
+            }
+        }
+    })
+
+</script>

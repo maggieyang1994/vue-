@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .demo1 {
+            background-color: red
+        }
+
+        .demo2 {
+            color: blue
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div v-bind:class="demoClass">jfdffffffffffff</div>
+    </div>
+
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                demo1: false,
+                demo2: true
+            }
+        },
+        computed: {
+            demoClass() {
+               return ['demo1', { demo2: this.demo2 }]
+            }
+        }
+    })
+</script>

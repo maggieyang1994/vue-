@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="item in checkedName">
+                <label for="">
+                    <span>{{item.name}}</span>
+                    <input type="checkbox" v-model="item.checked" @input="change">
+                </label>
+
+            </li>
+        </ul>
+
+        <select name="" id="" v-model="selectValue" multiple>
+            <option value="" v-for="item in selectItems" v-bind:value="item.value">{{item.text}}</option>
+        </select>
+        {{selectValue}}
+
+
+        <br/>
+        <input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
+        {{toggle}}
+    </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                toggle:"",
+                pick: "default",
+                a: 'default',
+                checkedName: [{
+                    name: "john",
+                    checked: false
+                },
+                {
+                    name: "tom",
+                    checked: false
+                }, {
+                    name: "maggie",
+                    checked: true
+                }
+                ],
+                selectValue: [],
+                selectItems: [
+                    { value: 'a', text: "A" },
+                    { value: 'b', text: "B" },
+                    { value: 'c', text: "C" },
+                ]
+            }
+        },
+        methods: {
+            change() {
+                console.log(this.checkedName)
+            }
+        }
+    })
+</script>

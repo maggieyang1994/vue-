@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div :style="{'fontSize':fontSize+ 'px'}">
+            <button-counter v-for="item in posts" title="item.title" :title="item.title" :key="item.id" @enlage="enlage"></button-counter>
+        </div>
+
+        <!-- <constom-input :search-text="searchText"  @input="searchText = $event"></constom-input> -->
+        {{searchText}}
+        <slot1>
+            <template slot ="header"><h1>this is header</h1></template>
+            <template slot ="body"><h1>this is body</h1></template>
+            <template slot ="footer"><h1>this is footer</h1></template>
+        </slot1>
+    </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    //  在组件中使用v-model 
+    // 父组件  中 将value通过prop传给  子组件
+    // 子组件接收这个value，  必须绑定一个v-bind:value ="value",触发input事件，将input框的内容传给父组件
+    // 父逐渐接受来自子组件的值，改变value
+    Vue.component("button-counter", {
+        props: {
+            title: {
+                default: "gongwei",
+                type: [String]
+            }
+        },
+        data: function () {
+            return {
+                counter: this.title
+            }
+        },
+        methods:{
+            change(){
+                console.log(this.title)
+                this.counter = "changed props";
+                console.log(this.title)
+            }
+        },
+        template: `<div>{{title}} <button @click="$emit('enlage',0.1,0.4)">enlarge text</button><button @click="change">改变prop的值</button></div> `
+
+    })
+    Vue.component("constom-input", {
+        props: {
+            searchText: {
+                default: function () { 
+                    return { name: 'gongwei' } 
+                    },
+                type: [Object]
+        },
+        data: function () {
+            return {
+
+            }
+        },
+        template: `<div><input type = "text" v-bind:value="searchText" @input="$emit('input',$event.target.value)"/></div>`
+
+    }})
+
+
+    var slot1 = {
+        data() { return {} },
+        template: `<div class="demo-alert-box">
+      <strong>Error!</strong>
+      <slot name ="header"></slot>
+      <slot name ="body"></slot>
+      <slot name ="footer"></slot>
+    </div>`
+    }
+    var vm = new Vue({
+        el: "#app",
+        components: {
+            "slot1": slot1
+        },
+        data() {
+            return {
+                searchText: { name: 'maggie' },
+                fontSize: 12,
+                posts: [
+                    { id: 1, title: 'My journey with Vue' },
+                    { id: 2, title: 'Blogging with Vue' },
+                    { id: 3, title: 'Why Vue is so fun' }
+                ]
+            }
+        },
+        methods: {
+            enlage(...args) {
+                console.log(args)
+            }
+        }
+    })
+</script>
