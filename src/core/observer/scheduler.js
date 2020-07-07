@@ -88,6 +88,14 @@ function flushSchedulerQueue () {
   for (index = 0; index < queue.length; index++) {
     watcher = queue[index]
     if (watcher.before) {
+      // new Watcher(vm, updateComponent, noop, {
+      //   before: function before () {
+      //     if (vm._isMounted && !vm._isDestroyed) {
+      //       callHook(vm, 'beforeUpdate');
+      //     }
+      //   }
+      // }, true /* isRenderWatcher */);
+      // beforeUpdate
       watcher.before()
     }
     id = watcher.id
@@ -163,6 +171,8 @@ function callActivatedHooks (queue) {
  */
 export function queueWatcher (watcher: Watcher) {
   const id = watcher.id
+ // 首先用 has 对象保证同一个 Watcher 只添加一次
+ // 一个watcher在同一个事件循环中的多次改动  只push一次
   if (has[id] == null) {
     has[id] = true
     if (!flushing) {
@@ -188,3 +198,6 @@ export function queueWatcher (watcher: Watcher) {
     }
   }
 }
+
+// update --> dep.notify(派发更新) ---> watcher.update ---> 加入queueWatcher队列 ---> nextTick(flushSchedulerQueue)不马上执行 放入下一队列
+// 第二次update 

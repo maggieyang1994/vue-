@@ -66,9 +66,11 @@ export function lifecycleMixin (Vue: Class<Component>) {
     // based on the rendering backend used.
     if (!prevVnode) {
       // initial render
+      // if !prevNode 新创建实例  传入 挂载的真实dom节点 vm.$el 和vnode 新生成的虚拟dom
       vm.$el = vm.__patch__(vm.$el, vnode, hydrating, false /* removeOnly */)
     } else {
       // updates
+      // else update 传入新旧的虚拟dom
       vm.$el = vm.__patch__(prevVnode, vnode)
     }
     restoreActiveInstance()

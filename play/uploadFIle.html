@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <!-- <input type="file" @change="handleClick"> -->
+      <form action="http://localhost:5001/upload/single" method="post" enctype="multipart/form-data">
+        <input type="file" name="avatar" />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+
+    <script src="../dist/vue.js"></script>
+    <script src="https://log.mmstat.com/eg.js"></script>
+  </body>
+</html>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  new Vue({
+    el: "#app",
+    data() {
+      return {};
+    },
+    methods: {
+      handleClick(e) {
+        var formData = new FormData();
+        console.log(e.target.files[0].file)
+        formData.append("file", e.target.files[0]);
+        axios.post("http://localhost:5001/upload/single", formData, {
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+        }).then(res => {
+          console.log(res)
+        }).catch(e => {
+          console.log(e)
+        })
+      }
+    },
+  });
+</script>

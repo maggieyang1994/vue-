@@ -43,9 +43,11 @@ export class Observer {
     this.value = value
     this.dep = new Dep()
     this.vmCount = 0
+    // 给value 添加一个 '__ob__'属性  值是当前Observer
     def(value, '__ob__', this)
     if (Array.isArray(value)) {
       if (hasProto) {
+        // 如果数组中已经有这些方法  将变形之后的方法赋值
         protoAugment(value, arrayMethods)
       } else {
         copyAugment(value, arrayMethods, arrayKeys)
@@ -57,7 +59,7 @@ export class Observer {
   }
 
   /**
-   * Walk through all properties and convert them into
+   * Walk through all properties and convert them ini
    * getter/setters. This method should only be called when
    * value type is Object.
    */
@@ -113,6 +115,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
   }
   let ob: Observer | void
   if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
+    // 判断是否已经 实例化  是否第一次实例化
     ob = value.__ob__
   } else if (
     shouldObserve &&
@@ -139,6 +142,7 @@ export function defineReactive (
   customSetter?: ?Function,
   shallow?: boolean
 ) {
+  // 所有被 Vue reactive 化的属性都有一个 Dep 对象与之对应
   const dep = new Dep()
 
   const property = Object.getOwnPropertyDescriptor(obj, key)
@@ -153,7 +157,8 @@ export function defineReactive (
     val = obj[key]
   }
 
-  let childOb = !shallow && observe(val)
+  let childOb = !shallow && observe(val);
+  // 再给当前value 设置 setter  getter
   Object.defineProperty(obj, key, {
     enumerable: true,
     configurable: true,

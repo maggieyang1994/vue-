@@ -1,20 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+
+  <body>
     <div id="app">
-        {{ count }}
-        <button @click="handlerAddOne">Add</button>
-        <ul>
-            <li v-for="item in array">{{ item.message }}</li>
-        </ul>
+      <div id="wrapper"></div>
+      <button @click="handleClick">request image</button>
+      <button @click="handleClickA">request a</button>
     </div>
+
     <script src="../dist/vue.js"></script>
-    <script src="./index.js"></script>
-</body>
+    <script src="https://log.mmstat.com/eg.js"></script>
+  </body>
 </html>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  new Vue({
+    el: "#app",
+    data() {
+      return {};
+    },
+    methods: {
+      handleClick() {
+        axios.defaults.withCredentials = true;
+        axios
+          .get("http://localhost:5000/getImage", {
+            headers: {
+              Authorization2: "test",
+            },
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      },
+      handleClickA() {
+        axios.defaults.withCredentials = true;
+        axios
+          .get("http://localhost:5000/a", {
+            headers: {
+              Authorization2: "test",
+            },
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      },
+    },
+  });
+</script>

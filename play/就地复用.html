@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="item in obj" v-bind:key="item">{{item}}</li>
+    </ul>
+    {{obj}}
+    <button @click="handleClick">click me</button>
+    
+  </div>
+</body>
+
+</html>
+<script src="../dist/vue.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      obj: {
+        name: "maggie"
+      }
+    },
+    methods: {
+      handleClick() {
+        this.obj.age = 18;
+        // Vue.set(this.obj, "age", 18)
+      }
+    }
+  });
+</script>

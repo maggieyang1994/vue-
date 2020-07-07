@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- <div class="wrapper1">
+      <span>count1: {{count}}</span>
+      <button @click="handleClick">click me</button>
+      <span>count2: {{count}}</span>
+    </div> -->
+    <div class="wrapper2">
+      {{count}}
+      {{obj}}
+      <ul class="ul1">
+        <li v-for="item in arr" v-bind:key="item">{{item}}</li>
+      </ul>
+      <ul class="ul2">
+        <li v-for="item in objArr" v-bind:key="item.id">{{item.name}}</li>
+      </ul>
+    </div>
+    <!-- <button @click="handleClick">click me</button> -->
+  </div>
+
+  <script src="../dist/vue.js"></script>
+</body>
+
+</html>
+
+<script>
+  new Vue({
+    el: "#app",
+    data() {
+      return {
+        count: 1,
+        obj: {
+          name: 'maggie'
+        },
+        arr: [1, 2, 3],
+        objArr: [
+          { id: 1, name: "gongwei" }
+        ]
+      }
+    },
+    methods: {
+      handleClick() {
+        this.arr.push(4)
+      }
+    }
+  })
+  // <!-- _init  -->initstate --->initData -->observe(data, true /* asRootData */);---->new Observer(value)
+  // isArray? observeArray[循环调用observe  最终都会走walk 调用defineReactive] : walk(each key defineReactive)
+  // 将每一个 属性都变成observe对象 Dep 对象与之对应
+  // Object.defineProperty getter的时候dep.depend(); 做依赖收集
+  // setter dep.notify 做派发更新
+
+
+
+  // dep里的东西  $attr(uid=0) ===> $listener(uid=1)  ===> 整个data(uid=2) [后面循环data对象 uid+1, 所有data中属性的uid一般是从3开始]
+  // data以及里面的每个属性都是一个可观察对象 都有__ob__属性（是一个new Observer对象）
+
+
+  // observer里面做的事情就是 判断value是否是个基本类型， 是基本类型不用observe
+  // 否则看这个对象是否已经实例化（有__ob__属性），如果有就不用实例化了  否则就调用new Observer(value)
+
+  // class Observer中做的事情就是 给value添加一个__ob__属性, 让value可观察
+  // 判断是否是数组 如果是 循环调用observe
+  // 不是就walk each key 来defineReactive
+  // 在defineReactive中  如果val是对象 则继续observe
+</script>

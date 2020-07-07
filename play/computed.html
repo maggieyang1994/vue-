@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <button @click="changeArr">change</button>
+    <div>对象数组 {{arr}}</div>
+    <div>对象数组的computed {{arr1}}</div>
+    <div>普通数组 {{commonArr}}</div>
+    <div>普通数组的computed {{arr2}}</div>
+  </div>
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  new Vue({
+    el: "#app",
+    data(){
+      return {
+        arr: [{
+          name: 'maggie',
+          age: "14"
+        }],
+        commonArr: [1,2,3]
+      }
+    },
+    computed: {
+      arr1(){
+        return this.arr.map(x => x.name)
+      }, 
+      arr2(){
+        return this.commonArr.map(x => x * 2)
+      }
+    },
+    methods: {
+      changeArr(){
+        this.arr[0].name="gongwei";
+        // this.commonArr[0] = 9
+        this.$set(this.commonArr, 0, 9)
+      }
+    }
+  })
+</script>

@@ -99,10 +99,13 @@ export default class Watcher {
    * Evaluate the getter, and re-collect dependencies.
    */
   get () {
+    // Dep.target = watcher
     pushTarget(this)
     let value
     const vm = this.vm
     try {
+      // new Watcher 的 第二个参数 getter = expOrFn  
+      // updateComponent
       value = this.getter.call(vm, vm)
     } catch (e) {
       if (this.user) {

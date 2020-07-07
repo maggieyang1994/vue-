@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="item in objArr" v-bind:key="item.id">{{item}}</li>
+    </ul>
+    <!-- {{obj}} -->
+    <button @click="handleClick">click me</button>
+  </div>
+</body>
+
+</html>
+<script src="../dist/vue.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      // numArr: [1,2,3]
+      objArr: [
+        {
+          id: 1, 
+          name: 'maggie'
+        },
+        {
+          id: 2,
+          name: "gongwei"
+        }
+      ],
+      // obj: { name: 'maggie' }
+    },
+    methods: {
+      handleClick() {
+        // 通过下标改变对象数组  能触发对象的新增？？
+        // this.obj.age = 18
+        // this.arr[1].id = 3;
+        // this.numArr.push(4)
+        this.objArr.slice(0,1)
+      }
+    }
+  });
+</script>

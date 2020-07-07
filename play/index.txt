@@ -1,0 +1,19 @@
+new Vue  ---->  this._init(option)  -------> this.initState(option.data)  --->  Observe(option.data, asroot = true)
+------->给data绑定一个__ob__属性 同时循环data这个对象  递归的给属性添加_ob_设置setter和getter
+
+
+observe(val)
+new Observe(val)
+isArray 
+
+if isArray   observeArray
+  循环 array 再走一遍
+
+
+else walk   
+  each key  defineReactive   根据value 再走一遍
+  util value是基本类型 Object.
+  
+
+  new vue的时候 递归的给data中的引用类型添加 __ob__属性  值是一个observer对象
+  调用Object.defineProperty get的时候做依赖收集   set 更新依赖

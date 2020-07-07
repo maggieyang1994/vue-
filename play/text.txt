@@ -1,0 +1,4 @@
+new Vue
+this.init(options)
+
+做一些初始化  initLifecycle initEvent initRender

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    {{count}}<br />
+    {{computedCount}}<br>
+    <button @click='handleClick'>click me</button>
+    <button @click="destroyClick">destroy</button>
+  </div>
+
+  <script src="../dist/vue.js"></script>
+</body>
+
+</html>
+
+<script>
+  new Vue({
+    el: "#app",
+    data() {
+      return {
+        count: 1
+      }
+    },
+    computed: {
+      computedCount() {
+        return this.count + 1
+      }
+    },
+    watcher: {
+      computedCount(newv, oldv) {
+        console.log(newv, oldv)
+      }
+    },
+    methods: {
+      handleClick() {
+        this.count++
+      },
+      destroyClick(){
+        this.$destroy()
+      }
+    },
+    beforeCreate(){
+      console.log("beforeCreate")
+    },
+    created(){
+      console.log("created")
+    },
+    beforeMount(){
+      console.log("beforeMount")
+    },
+    mounted(){
+      console.log("mounted")
+      console.log(this.data)
+    },
+    beforeUpdate(newV, oldV){
+      console.log("beforeUpdate")
+    },
+    updated(){
+      console.log("updated")
+    },
+    beforeDestroy(){
+      console.log("beforeDestroy")
+    },
+    destroyed(){
+      console.log("destroyed")
+    }
+  })
+
+</script>

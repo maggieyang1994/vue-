@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <div>
+        <!-- 在html中组件标签必须要闭合 -->
+        <!-- 在template中vue会做特殊处理 -->
+        <button @click ="change">change msg</button>
+        <async-example ref="asyncdemo" :msg="msg"></async-example>
+        <sync-example ref="syncdemo" :msg="msg"></sync-example>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </body>
+</html>
+
+<script>
+  Vue.component("async-example", function (resolve, reject) {
+    setTimeout(function () {
+      // 向 `resolve` 回调传递组件定义
+      resolve({
+        props: ['msg'],
+        template: "<div>I am async! {{msg}}</div>",
+        mounted() {
+          console.log("async mounted");
+        },
+        updated() {
+          console.log("async updated");
+        },
+      });
+    }, 3000);
+  });
+  Vue.component("sync-example", {
+    props: ['msg'],
+    template: "<div>I am sync! {{msg}}</div>",
+    mounted() {
+      console.log("sync mounted");
+    },
+    updated() {
+      console.log("sync updated");
+    },
+  });
+
+  new Vue({
+    el: "#app",
+    data() {
+      return {
+        msg: "beforeupdate"
+      };
+    },
+    mounted() {
+      // 文档中： 注意 mounted 不会保证所有的子组件也都一起被挂载。如果你希望等到整个视图都渲染完毕，可以在 mounted 内部使用 vm.$nextTick：
+      // 异步组件 不能保证mounted的顺序 父组件的mounted比异步组件的mounted先触发
+      // 只适用于异步组件  同步组件是没有这个问题的
+      // 有时候用nexttick也不管用  但是异步组件mounted之后 会强制更新所有包含该组件的父组件
+      // 所以在updated一定能拿到异步组件的信息
+      console.log("parent mounted");
+      console.log("asyncdemo", this.$refs.asyncdemo);
+      console.log("syncdemo", this.$refs.syncdemo);
+      this.$nextTick(() => {
+        console.log("nextTick", this.$refs.asyncdemo);
+      });
+      setTimeout(() => {
+        console.log("setTimeout", this.$refs.asyncdemo);
+      }, 2000);
+    },
+    updated() {
+      console.log("parent updated", this.$refs.asyncdemo);
+    },
+    methods: {
+      change(){
+        this.msg = 'updated'
+      }
+    }
+  });
+</script>

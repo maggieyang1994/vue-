@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div id ="message">{{message}}</div>
+        <div id ="message1">{{message1}}</div>
+        <div id ="message2">{{message2}}</div>
+        <button @click="handleClick" ref="button">click me</button>
+    </div>
+    <script src="../dist/vue.js"></script>
+</body>
+</html>
+<script>
+
+const instance = new Vue({
+  el: '#app',
+  props: {
+      propa: {
+          type: String
+      }
+  },
+  data: {
+      message: "hello world",
+      message1:'gongwei',
+      message2:'rinima'
+  },
+  // beforeCreate(){
+  //     console.log(this)
+  // },
+  // created(){
+  //     console.log(this)
+  // },
+  // beforeMount(){
+  //   console.log(this)
+  // },
+  // mounted(){
+  //    console.log(this)
+  // },
+  // beforeUpdate(){
+  //   console.log(this)
+  // },
+  // updated(){
+  //   console.log(this)
+  // },
+  // beforeDestroy(){
+  //   console.log(this)
+  // },
+  // destroyed(){
+  //   console.log(this)
+  // },
+  methods: {
+    handleClick(){
+      // 一次事件循环属于同一个队列 那么watcher_id 都是1
+       this.message = 'bye bye';
+       this.message1 = 'maggie';
+       this.message2 = 'riniba'
+      //  console.log(document.getElementById('message').innerHTML)
+      //  this.$nextTick(() => {
+      //    console.log(document.getElementById('message').innerHTML)
+      //  })
+       this.message = 'come back';
+      //  console.log(document.getElementById('message').innerHTML)
+       this.$nextTick(() => {
+         console.log(document.getElementById('message').innerHTML)
+         console.log(document.getElementById('message1').innerHTML)
+       })
+       
+      // setTimeout(() => {
+      //   console.log(document.getElementById('message').innerHTML)
+      // })
+      // let p = Promise.resolve()
+      // p.then(() => {
+      //   console.log(document.getElementById('message').innerHTML)
+      // })
+      // let counter = 1;
+      // let textNode = document.createTextNode(counter)
+      // let observe = new MutationObserver(() => console.log('mutationObserver', document.getElementById('message').innerHTML));
+      // observe.observe(textNode, {
+      //   characterData: true
+      // })
+      // textNode.data = 2
+    }
+  }
+})
+
+// init   beforeCreate(no data no prop no method)  initState created(has data no el)   
+// $mount  beforeMount(has data has el  , dom not update yet)
+// vm_update() --> vm._patch(this.el, vm._render())   mounted(has el , and dom have updated)
+
+// if update the data
+// emit defineProperty setter (the data has update, but dom not updated)
+// 把多次改动 放入queue.push(watcher) 如果同样的值改动了多次 更新到dom的时候就是最后一次改动的值   并且dom更新只会更新一次
+// 一定时间后  callHook('beforeUPdate')
+// vm_updated  vm.__patch__(prevVnode, vnode) 更新到dom
+// callhook('updated')
+
+
+</script>
